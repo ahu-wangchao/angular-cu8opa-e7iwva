@@ -1,0 +1,31 @@
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+
+import { products } from "../products";
+import { CartService } from "../cart.service";
+
+@Component({
+  selector: "app-product-details",
+  templateUrl: "./product-details.component.html",
+  styleUrls: ["./product-details.component.css"]
+})
+export class ProductDetailsComponent implements OnInit {
+  product;
+
+  constructor(
+    private route: ActivatedRoute,
+    private cartService: CartService
+  ) {}
+
+  ngOnInit() {
+    // TODO 根据productId从products数组中获取product元素。+是什么意思？
+    this.route.paramMap.subscribe(params => {
+      this.product = products[+params.get("productId")];
+    });
+  }
+
+  addToCart(product) {
+    this.cartService.addToCart(product);
+    window.alert("your product has been added to the cart!");
+  }
+}
